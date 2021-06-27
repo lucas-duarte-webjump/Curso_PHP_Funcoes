@@ -11,7 +11,6 @@ function sacar( $conta ,$valor) {
     $conta['Saldo'] -= $valor;
   }
 
-
   return $conta;
 }
 
