@@ -15,21 +15,18 @@ class Buscador
         $this->httpClient = $httpClient;
         $this->crawler = $crawler;
     }
-
-    public function buscar(string $url): array 
+    public function buscar(string $url): array
     {
         $response = $this->httpClient->request('GET', $url);
 
         $html = $response->getBody();
 
         $this->crawler->addHtmlContent($html);
-
-        
         $elementosCursos = $this->crawler->filter('p.category-description');
 
         $cursos = [];
 
-        foreach($elementosCursos as $elemento) {
+        foreach ($elementosCursos as $elemento) {
             $cursos[] = $elemento->textContent;
         }
 
