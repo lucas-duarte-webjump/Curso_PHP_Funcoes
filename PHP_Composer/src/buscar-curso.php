@@ -15,8 +15,10 @@ $crawler = new Crawler();
 
 $buscador = new Buscador($client, $crawler);
 
+
+# O simbolo -> serve para chamar funções internas de uma classe
 $cursos = $buscador->buscar('/category/programacao/php');
 
 foreach($cursos as $curso) {
-    echo $curso . PHP_EOL;
+    exibirMensagem($curso);
 }
