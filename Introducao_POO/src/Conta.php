@@ -1,26 +1,77 @@
 <?php
 
-class Conta 
-{
-    public string $cpfTitular;
-    public string $nomeTitular;
-    public float $saldo = 0;
 
-    public function sacar(float $valorASacar) 
+class Conta
+{
+    private $titular;
+    private float $saldo;
+    private static $numeroDeContas = 0;
+
+
+    public function __construct(Titular $titular) 
     {
-        if($valorASacar > $this->saldo) {
-            echo "Saldo Indisponivel";
-        } else {
-            $this->saldo -= $valorASacar;
-        }
+        $this->titular = $titular;
+        $this->saldo = 0;
+        self::$numeroDeContas++;
     }
 
-    public function depositar(float $valorADepositar): void 
+    public function __destruct() 
+    {
+        self::$numeroDeContas--;
+    }
+
+
+
+    public function recuperaSaldo(): string
+    {
+        return $this->saldo;
+    }
+
+    public function saca(float $valorASacar) 
+    { 
+        if($valorASacar > $this->saldo) {
+            echo "Saldo Indisponivel";
+            return;
+        } 
+        $this->saldo -= $valorASacar;
+        
+    }
+
+    public function deposita(float $valorADepositar): void 
     {
         if($valorADepositar < 0) {
             echo "Valor precisa ser positivo";
-        } else {
-            $this->saldo += $valorADepositar;
-        }
+            return;
+        } 
+        $this->saldo += $valorADepositar;
+        
+    }
+
+    public function transfere(float $valorATransferir, Conta $contaDestino)
+    {
+        if($valorATransferir > $this->saldo) {
+            echo "Saldo indisponível";
+            return;
+        } 
+         
+        $this->saca($valorATransferir);
+        $contaDestino->deposita($valorATransferir);
+        
+    }
+   
+    public function recuperaNomeTitular(): string
+    {
+        return $this->titular->recuperaNome();
+    }
+
+    public function recuperaCpfTitular(): string
+    {
+        return $this->titular->recuperaCpf();
+    }
+
+
+    public static function recuperaNumeroDeConta(): int
+    {
+        return self::$numeroDeContas;
     }
 }
