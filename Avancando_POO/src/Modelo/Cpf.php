@@ -2,6 +2,7 @@
 
 namespace PHP\Banco\Modelo;
 
+use InvalidArgumentException;
 
 final class Cpf {
     private string $cpf;
@@ -16,8 +17,7 @@ final class Cpf {
             ]);
             
             if ($cpf === false) {
-                echo 'CPF inválido';
-                exit();
+                throw new InvalidArgumentException();
             }
             $this->cpf = $cpf;
         } 

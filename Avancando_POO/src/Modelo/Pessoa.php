@@ -3,6 +3,8 @@
 
 namespace PHP\Banco\Modelo;
 
+use JetBrains\PhpStorm\ExpectedValues;
+
 abstract class Pessoa
 {
 
@@ -31,8 +33,7 @@ abstract class Pessoa
     final protected function validNomeTitular(string $nomeTitular) 
     {
         if (strlen($nomeTitular) < 5) {
-            echo "Nome precisa ter pelo menos 5 catacteres";
-            exit();
+            throw new ExpectedValues();
         }
     }
 }
